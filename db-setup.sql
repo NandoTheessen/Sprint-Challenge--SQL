@@ -14,7 +14,7 @@ name VARCHAR(128) NOT NULL
 CREATE TABLE user (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 name VARCHAR(128) NOT NULL,
-org_id INTEGER REFERENCES organization(id)
+org_id INTEGER REFERENCES organization(id) ON DELETE CASCADE
 );
 
 -- create a channel table
@@ -22,23 +22,23 @@ org_id INTEGER REFERENCES organization(id)
 CREATE TABLE channel (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 name VARCHAR(128) NOT NULL,
-org_id INTEGER REFERENCES organization(id)
+org_id INTEGER REFERENCES organization(id) ON DELETE CASCADE
 );
 
 -- create join table for users + channels
 
 CREATE TABLE user_channel (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    u_id INTEGER REFERENCES user(id),
-    ch_id INTEGER REFERENCES channel(id)
+    u_id INTEGER REFERENCES user(id) ON DELETE CASCADE,
+    ch_id INTEGER REFERENCES channel(id) ON DELETE CASCADE
 );
 
 -- create a message table
 
 CREATE TABLE messages (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    u_id INTEGER REFERENCES user(id),
-    ch_id INTEGER REFERENCES channel(id),
+    u_id INTEGER REFERENCES user(id) ON DELETE CASCADE,
+    ch_id INTEGER REFERENCES channel(id) ON DELETE CASCADE,
     body VARCHAR(2056) NOT NULL,
     timestamp DATE DEFAULT (datetime('now', 'localtime'))
 );
